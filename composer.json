@@ -15,12 +15,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-		"doctrine/doctrine-orm-module": "0.*"
-    },
-    "suggest": {
-        "zendframework/zend-developer-tools": "zend-developer-tools if you want to profile operations executed by the ORM during development",
-        "doctrine/migrations": "doctrine migrations if you want to keep your schema definitions versioned",
-        "ext-intl": "ext/intl for i18n features (included in default builds of PHP)"
+		"doctrine/doctrine-orm-module": "0.7.*"
     },
     "autoload": {
         "psr-0": {
