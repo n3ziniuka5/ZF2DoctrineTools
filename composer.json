@@ -1,0 +1,30 @@
+{
+    "name": "n3ziniuka5/zf2-doctrine-tools",
+    "description": "Zend Framework 2 Module that provides extended functionality to controllers/models/forms. Also includes some view helpers.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "doctrine",
+        "zf2"
+    ],
+    "authors": [
+        {
+            "name": "Laurynas Tretjakovas",
+            "email": "laurynas.tretjakovas@gmail.com"
+        },
+    ],
+    "require": {
+        "php": ">=5.3.3",
+		"doctrine/doctrine-orm-module": "0.*"
+    },
+    "suggest": {
+        "zendframework/zend-developer-tools": "zend-developer-tools if you want to profile operations executed by the ORM during development",
+        "doctrine/migrations": "doctrine migrations if you want to keep your schema definitions versioned",
+        "ext-intl": "ext/intl for i18n features (included in default builds of PHP)"
+    },
+    "autoload": {
+        "psr-0": {
+            "ZF2DoctrineTools\\": "src/"
+        }
+    },
+}
