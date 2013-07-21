@@ -11,7 +11,7 @@
         {
             "name": "Laurynas Tretjakovas",
             "email": "laurynas.tretjakovas@gmail.com"
-        },
+        }
     ],
     "require": {
         "php": ">=5.3.3",
