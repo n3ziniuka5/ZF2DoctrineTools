@@ -12,20 +12,16 @@ namespace ZF2DoctrineTools;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\ControllerProviderInterface;
-use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
-use ZF2DoctrineTools\Persistence\EntityManagerAwareInterface;
 use ZF2DoctrineTools\Service\CacheService;
-use ZF2DoctrineTools\Translator\TranslatorAwareInterface;
 use ZF2DoctrineTools\View\Helper\ThisRouteHelper;
 
 /**
  * @author Laurynas Tretjakovas(n3ziniuka5) <laurynas.tretjakovas@gmail.com>
  *
  */
-class Module implements ConfigProviderInterface, ServiceProviderInterface, ViewHelperProviderInterface, BootstrapListenerInterface, ControllerProviderInterface
+class Module implements ConfigProviderInterface, ViewHelperProviderInterface, BootstrapListenerInterface
 {
 
     public function getConfig()
@@ -33,43 +29,10 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface, ViewH
         return include __DIR__ . '/../../config/module.config.php';
     }
 
-    public function getControllerConfig()
-    {
-        return [
-            'initializers' => [
-                function ($instance, $controllerManager) {
-                    $serviceLocator = $controllerManager->getServiceLocator();
-                    if ($instance instanceof TranslatorAwareInterface) {
-                        $translator = $serviceLocator->get('translator');
-                        $instance->setTranslator($translator);
-                    }
-                }
-            ]
-        ];
-    }
-
-    public function getServiceConfig()
-    {
-        return [
-            'initializers' => [
-                function ($instance, $serviceManager) {
-                    if ($instance instanceof TranslatorAwareInterface) {
-                        $translator = $serviceManager->get('translator');
-                        $instance->setTranslator($translator);
-                    }
-                    if ($instance instanceof EntityManagerAwareInterface) {
-                        $entityManager = $serviceManager->get('Doctrine\ORM\EntityManager');
-                        $instance->setEntityManager($entityManager);
-                    }
-                }
-            ]
-        ];
-    }
-
     public function getViewHelperConfig()
     {
         return [
-            'factories'    => [
+            'factories' => [
                 'thisRoute' => function ($sm) {
                     $locator  = $sm->getServiceLocator();
                     $registry = $locator->get('ZF2DoctrineTools\Service\RegistryService');
@@ -78,19 +41,6 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface, ViewH
                     return $helper;
                 },
             ],
-            'initializers' => [
-                function ($instance, $pluginManager) {
-                    $serviceLocator = $pluginManager->getServiceLocator();
-                    if ($instance instanceof TranslatorAwareInterface) {
-                        $translator = $serviceLocator->get('translator');
-                        $instance->setTranslator($translator);
-                    }
-                    if ($instance instanceof EntityManagerAwareInterface) {
-                        $entityManager = $serviceLocator->get('Doctrine\ORM\EntityManager');
-                        $instance->setEntityManager($entityManager);
-                    }
-                }
-            ]
         ];
     }
 
