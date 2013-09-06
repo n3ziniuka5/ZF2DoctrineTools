@@ -10,9 +10,9 @@ class UniqueValueValidator extends \Zend\Validator\AbstractValidator
 
     const IN_USE = 'inUse';
 
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::IN_USE => "%value% is already in use"
-    );
+    ];
 
     protected $sm;
     protected $table;

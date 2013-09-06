@@ -8,7 +8,7 @@ namespace ZF2DoctrineTools\Service;
 class RegistryService
 {
 
-    protected $registry = array();
+    protected $registry = [];
 
     public function set($key, $var)
     {

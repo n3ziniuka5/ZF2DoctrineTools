@@ -24,23 +24,23 @@ class CacheService extends AbstractService
     {
         $arrayKey = $namespace . '-' . $ttl;
         if (!array_key_exists($arrayKey, $this->cacheArray)) {
-            $this->cacheArray[$arrayKey] = \Zend\Cache\StorageFactory::factory(array(
-                'adapter' => array(
+            $this->cacheArray[$arrayKey] = \Zend\Cache\StorageFactory::factory([
+                'adapter' => [
                     'name'    => 'filesystem',
-                    'options' => array(
+                    'options' => [
                         'namespace'   => $namespace,
                         'ttl'         => $ttl,
                         'cache_dir'   => 'data/cache',
                         'key_pattern' => '/^[\\a-z0-9_\+\-\[\]\$]*$/Di' //
-                    ),
-                ),
-                'plugins' => array(
-                    'exception_handler' => array(
+                    ],
+                ],
+                'plugins' => [
+                    'exception_handler' => [
                         'throw_exceptions' => false
-                    ),
+                    ],
                     'Serializer',
-                )
-            ));
+                ]
+            ]);
         }
         return $this->cacheArray[$arrayKey];
     }

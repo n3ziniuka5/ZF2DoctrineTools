@@ -68,8 +68,8 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface, ViewH
 
     public function getViewHelperConfig()
     {
-        return array(
-            'factories'    => array(
+        return [
+            'factories'    => [
                 'thisRoute' => function ($sm) {
                     $locator  = $sm->getServiceLocator();
                     $registry = $locator->get('ZF2DoctrineTools\Service\RegistryService');
@@ -77,7 +77,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface, ViewH
                     $helper   = new ThisRouteHelper($e);
                     return $helper;
                 },
-            ),
+            ],
             'initializers' => [
                 function ($instance, $pluginManager) {
                     $serviceLocator = $pluginManager->getServiceLocator();
@@ -91,7 +91,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface, ViewH
                     }
                 }
             ]
-        );
+        ];
     }
 
     public function onBootstrap(EventInterface $e)
