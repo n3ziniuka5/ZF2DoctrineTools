@@ -1,19 +1,24 @@
 <?php
 namespace ZF2DoctrineTools\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Mvc\I18n\Translator;
+use ZF2DoctrineTools\Translator\TranslatorAwareInterface;
 
 /**
  * @author Laurynas Tretjakovas(n3ziniuka5) <laurynas.tretjakovas@gmail.com>
- * @property \Zend\I18n\Translator\Translator	$translator
+ * @property \Zend\Mvc\I18n\Translator    $translator
  */
-class AbstractController extends AbstractActionController
+class AbstractController extends AbstractActionController implements TranslatorAwareInterface
 {
-	protected $translator;
-	
-	protected function getTranslator() {
-		if(!$this->translator) {
-			$this->translator = $this->getServiceManager()->get('translator');
-		}
-		return $this->translator;
-	}
+    protected $translator;
+
+    protected function getTranslator()
+    {
+        return $this->translator;
+    }
+
+    public function setTranslator(Translator $translator)
+    {
+        $this->translator = $translator;
+    }
 }

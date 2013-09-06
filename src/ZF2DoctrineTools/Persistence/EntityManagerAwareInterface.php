@@ -1,11 +1,10 @@
 <?php
 namespace ZF2DoctrineTools\Persistence;
+use Doctrine\ORM\EntityManager;
 
-/*
+/**
  * @author Laurynas Tretjakovas(n3ziniuka5) <laurynas.tretjakovas@gmail.com>
  */
-
-use Doctrine\ORM\EntityManager;
 
 interface EntityManagerAwareInterface
 {
