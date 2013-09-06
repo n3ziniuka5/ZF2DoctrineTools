@@ -20,13 +20,10 @@ use ZF2DoctrineTools\Service\RegistryService;
  * @author Laurynas Tretjakovas(n3ziniuka5) <laurynas.tretjakovas@gmail.com>
  *
  */
-class Module implements AutoloaderProviderInterface {
+class Module {
 
     public function getAutoloaderConfig() {
         return array(
-            'Zend\Loader\ClassMapAutoloader' => array(
-                __DIR__ . '/autoload_classmap.php',
-            ),
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . str_replace('\\', '/' , __NAMESPACE__),
