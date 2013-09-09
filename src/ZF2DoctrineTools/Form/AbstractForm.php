@@ -23,6 +23,8 @@ abstract class AbstractForm extends Form implements ServiceManagerAwareInterface
     protected $entityManager;
     protected $translator;
 
+    public abstract function addFormInputs();
+
     public function addUniqueValidator($inputName, $table, $col, $primary, $message, $omit = null)
     {
         $inputFilter = $this->getInputFilter();
