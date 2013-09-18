@@ -15,19 +15,17 @@ class UniqueValueValidator extends \Zend\Validator\AbstractValidator
     ];
 
     protected $sm;
-    protected $table;
-    protected $col;
-    protected $primary;
+    protected $entity;
+    protected $field;
     protected $omit;
     protected $entityManager;
 
-    public function __construct($sm, $table, $col, $primary, $omit = null)
+    public function __construct($sm, $entity, $field, $omit = null)
     {
         parent::__construct();
         $this->sm            = $sm;
-        $this->table         = $table;
-        $this->col           = $col;
-        $this->primary       = $primary;
+        $this->entity        = $entity;
+        $this->field         = $field;
         $this->omit          = $omit;
         $this->entityManager = $this->sm->get('Doctrine\ORM\EntityManager');
     }
@@ -36,13 +34,13 @@ class UniqueValueValidator extends \Zend\Validator\AbstractValidator
     {
         $this->setValue($value);
         $qb = $this->entityManager->createQueryBuilder();
-        $qb->select(sprintf('a.' . $this->primary));
-        $qb->from($this->table, 'a');
+        $qb->select('a.id');
+        $qb->from($this->entity, 'a');
         $where = $qb->expr()->andX();
-        $where->add($qb->expr()->eq('a.' . $this->col, ':value'));
+        $where->add($qb->expr()->eq('a.' . $this->field, ':value'));
         $qb->setParameter('value', $this->value);
         if ($this->omit) {
-            $where->add($qb->expr()->neq('a.' . $this->primary, ':omit'));
+            $where->add($qb->expr()->neq('a.id', ':omit'));
             $qb->setParameter('omit', $this->omit);
         }
         $qb->where($where);

@@ -25,11 +25,11 @@ abstract class AbstractForm extends Form implements ServiceManagerAwareInterface
 
     public abstract function addFormInputs();
 
-    public function addUniqueValidator($inputName, $table, $col, $primary, $message, $omit = null)
+    public function addUniqueValidator($inputName, $entity, $field, $message, $omit = null)
     {
         $inputFilter = $this->getInputFilter();
         $input       = $inputFilter->get($inputName);
-        $validator   = new UniqueValueValidator($this->getServiceManager(), $table, $col, $primary, $omit);
+        $validator   = new UniqueValueValidator($this->getServiceManager(), $entity, $field, $omit);
         $validator->setMessage($message);
         $input->getValidatorChain()->addValidator($validator);
     }
