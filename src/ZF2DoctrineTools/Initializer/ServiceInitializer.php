@@ -2,6 +2,7 @@
 namespace ZF2DoctrineTools\Initializer;
 use Zend\ServiceManager\InitializerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\ServiceManagerAwareInterface;
 use ZF2DoctrineTools\Form\AbstractForm;
 use ZF2DoctrineTools\Persistence\EntityManagerAwareInterface;
 use ZF2DoctrineTools\Translator\TranslatorAwareInterface;
@@ -14,6 +15,9 @@ class ServiceInitializer implements InitializerInterface
 {
     public function initialize($instance, ServiceLocatorInterface $serviceManager)
     {
+        if ($instance instanceof ServiceManagerAwareInterface) {
+            $instance->setServiceManager($serviceManager);
+        }
         if ($instance instanceof TranslatorAwareInterface) {
             $translator = $serviceManager->get('translator');
             $instance->setTranslator($translator);
