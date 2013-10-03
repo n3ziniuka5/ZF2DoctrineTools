@@ -47,6 +47,10 @@ class Module implements ConfigProviderInterface, ViewHelperProviderInterface, Bo
     {
         $sm           = $e->getApplication()->getServiceManager();
         $eventManager = $e->getApplication()->getEventManager();
+
+        //For global ServiceManager Acccess
+        RegistryService::set('ServiceManager', $sm);
+
         //Flush Doctrine transactions
         $eventManager->attach(
             'finish',
