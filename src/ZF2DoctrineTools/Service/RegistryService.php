@@ -8,27 +8,27 @@ namespace ZF2DoctrineTools\Service;
 class RegistryService
 {
 
-    protected $registry = [];
+    protected static $registry = [];
 
-    public function set($key, $var)
+    public static function set($key, $var)
     {
         $key = (string)$key;
         if (!strlen($key)) {
             throw new \Exception('Invalid registry key');
         }
-        $this->registry[$key] = $var;
+        self::$registry[$key] = $var;
     }
 
-    public function get($key)
+    public static function get($key)
     {
-        if (!$this->exists($key)) {
+        if (!self::exists($key)) {
             throw new \Exception('Specified key does not exist in the registry');
         }
-        return $this->registry[$key];
+        return self::$registry[$key];
     }
 
-    public function exists($key)
+    public static function exists($key)
     {
-        return array_key_exists($key, $this->registry);
+        return array_key_exists($key, self::$registry);
     }
 }

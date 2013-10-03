@@ -15,6 +15,7 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use ZF2DoctrineTools\Service\CacheService;
+use ZF2DoctrineTools\Service\RegistryService;
 use ZF2DoctrineTools\View\Helper\ThisRouteHelper;
 
 /**
@@ -33,11 +34,9 @@ class Module implements ConfigProviderInterface, ViewHelperProviderInterface, Bo
     {
         return [
             'factories' => [
-                'thisRoute' => function ($sm) {
-                    $locator  = $sm->getServiceLocator();
-                    $registry = $locator->get('ZF2DoctrineTools\Service\RegistryService');
-                    $e        = $registry->get('BootstrapEvent');
-                    $helper   = new ThisRouteHelper($e);
+                'thisRoute' => function () {
+                    $e      = RegistryService::get('BootstrapEvent');
+                    $helper = new ThisRouteHelper($e);
                     return $helper;
                 },
             ],
@@ -49,13 +48,15 @@ class Module implements ConfigProviderInterface, ViewHelperProviderInterface, Bo
         $sm           = $e->getApplication()->getServiceManager();
         $eventManager = $e->getApplication()->getEventManager();
         //Flush Doctrine transactions
-        $eventManager->attach('finish', function ($e) use ($sm) {
-            $sm->get('Doctrine\ORM\EntityManager')->flush();
-        });
+        $eventManager->attach(
+            'finish',
+            function ($e) use ($sm) {
+                $sm->get('Doctrine\ORM\EntityManager')->flush();
+            }
+        );
 
         //Bind bootstrap event to registry
-        $registry = $sm->get('ZF2DoctrineTools\Service\RegistryService');
-        $registry->set('BootstrapEvent', $e);
+        RegistryService::set('BootstrapEvent', $e);
     }
 
 }
