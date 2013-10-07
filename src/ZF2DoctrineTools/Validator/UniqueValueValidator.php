@@ -5,35 +5,30 @@ namespace ZF2DoctrineTools\Validator;
  * @author Laurynas Tretjakovas(n3ziniuka5) <laurynas.tretjakovas@gmail.com>
  * @property \Doctrine\ORM\EntityManager    $entityManager
  */
-class UniqueValueValidator extends \Zend\Validator\AbstractValidator
+class UniqueValueValidator extends AbstractValidator
 {
-
     const IN_USE = 'inUse';
 
     protected $messageTemplates = [
         self::IN_USE => "%value% is already in use"
     ];
 
-    protected $sm;
     protected $entity;
     protected $field;
     protected $omit;
-    protected $entityManager;
 
-    public function __construct($sm, $entity, $field, $omit = null)
+    public function __construct($entity, $field, $omit = null)
     {
         parent::__construct();
-        $this->sm            = $sm;
-        $this->entity        = $entity;
-        $this->field         = $field;
-        $this->omit          = $omit;
-        $this->entityManager = $this->sm->get('Doctrine\ORM\EntityManager');
+        $this->entity = $entity;
+        $this->field  = $field;
+        $this->omit   = $omit;
     }
 
     public function isValid($value)
     {
         $this->setValue($value);
-        $qb = $this->entityManager->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('a.id');
         $qb->from($this->entity, 'a');
         $where = $qb->expr()->andX();
