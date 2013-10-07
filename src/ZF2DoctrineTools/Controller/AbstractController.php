@@ -1,5 +1,6 @@
 <?php
 namespace ZF2DoctrineTools\Controller;
+
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\I18n\Translator;
 use ZF2DoctrineTools\Translator\TranslatorAwareInterface;
@@ -20,5 +21,10 @@ class AbstractController extends AbstractActionController implements TranslatorA
     public function setTranslator(Translator $translator)
     {
         $this->translator = $translator;
+    }
+
+    protected function getServiceManager()
+    {
+        return $this->getServiceLocator();
     }
 }
