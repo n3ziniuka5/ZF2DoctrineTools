@@ -1,7 +1,9 @@
 <?php
 namespace ZF2DoctrineTools\Initializer;
+
 use Zend\ServiceManager\InitializerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use ZF2DoctrineTools\Persistence\EntityManagerAwareInterface;
 use ZF2DoctrineTools\Translator\TranslatorAwareInterface;
 
 
@@ -16,6 +18,10 @@ class ControllerInitializer implements InitializerInterface
         if ($instance instanceof TranslatorAwareInterface) {
             $translator = $serviceManager->get('translator');
             $instance->setTranslator($translator);
+        }
+        if ($instance instanceof EntityManagerAwareInterface) {
+            $entityManager = $serviceManager->get('Doctrine\ORM\EntityManager');
+            $instance->setEntityManager($entityManager);
         }
     }
 }
