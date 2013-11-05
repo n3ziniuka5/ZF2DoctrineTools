@@ -31,7 +31,9 @@ class CacheService
                         'namespace'   => $namespace,
                         'ttl'         => $ttl,
                         'cache_dir'   => 'data/cache',
-                        'key_pattern' => '/^[\\a-z0-9_\+\-\[\]\$]*$/Di' //
+                        'key_pattern' => '/^[\\a-z0-9_\+\-\[\]\$]*$/Di',
+                        'dir_permission' => 0770,
+                        'file_permission' => 0660,
                     ],
                 ],
                 'plugins' => [
